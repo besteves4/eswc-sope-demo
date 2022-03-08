@@ -24,7 +24,7 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
@@ -144,26 +144,25 @@ export default function Home() {
             Demonstrator used to simulate an app request for personal data and the respective response
           </div>
           <div class="container">
-            <div class="">
+            <div class="" style="text-align: center;">
               <p><b>Choose type of personal data:</b></p>
               <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="">
+            <div class="" style="text-align: center;">
               <p><b>Choose purpose:</b></p>
               <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="">
+            <div class="" style="text-align: center;">
               <p><b>Choose processing Activities:</b></p>
               <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="bottom-container">
-              <p><b>Execute request:</b></p>
+            <div class="bottom-container" style="text-align: center;">
               <Button variant="small" value="permission" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Execute</Button>
             </div>
           </div>
