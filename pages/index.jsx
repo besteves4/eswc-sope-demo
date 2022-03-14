@@ -32,14 +32,22 @@ import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
 async function getDataSources(privateContainer, selectedPD, selectedPurpose, selectedAccess) {
+  // get list of ODRL policies
   const policiesContainer = `${privateContainer}odrl_policies/`;
   const policyDataset = await getSolidDataset(
     policiesContainer, {
     fetch: fetch
   });
-  
   const policyList = getContainedResourceUrlAll(policyDataset);
-  console.log(policyList);
+  
+  // get list of files in personal_data/ container
+  const dataContainer = `${privateContainer}personal_data/`;
+  const personalDataset = await getSolidDataset(
+    dataContainer, {
+    fetch: fetch
+  });
+  const personalDataFilesList = getContainedResourceUrlAll(personalDataset);
+  console.log(personalDataFilesList);
 }
 
 export default function Home() {
