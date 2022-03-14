@@ -31,27 +31,14 @@ import { fetch } from "@inrupt/solid-client-authn-browser";
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
-/* async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
-  const myDataset = await getSolidDataset(
+async function getDataSources(privateContainer, selectedPD, selectedPurpose, selectedAccess) {
+  const policiesContainer = `${privateContainer}odrl_policies/`;
+  const policyDataset = await getSolidDataset(
     policiesContainer, {
     fetch: fetch
   });
-  console.log(myDataset, newPolicy);
-  const policyList = getContainedResourceUrlAll(myDataset);
-  console.log(filename, policyList);
-
-  const filenameSave = `${policiesContainer}${filename}`;
-  if(policyList.includes(filenameSave)){
-    alert("There is already a policy with that name, choose another");
-  } else {
-    try {
-      await saveSolidDatasetAt(filenameSave,
-        newPolicy, { fetch: fetch });
-    } catch (error) {
-      console.log(error);
-    }
-  }
-} */
+  console.log(policyDataset);
+}
 
 export default function Home() {
   const { session } = useSession();
@@ -110,9 +97,7 @@ export default function Home() {
       const podRoot = response[0];
       const podPrivateContainer = `${podRoot}private/`;
 
-      console.log(podPrivateContainer, response);
-
-      // getPolicyFilenames(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
+      getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
     });
   }
 
