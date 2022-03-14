@@ -24,7 +24,7 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
 
@@ -44,11 +44,13 @@ async function getDataSources(privateContainer, selectedPD, selectedPurpose, sel
   
   for (var i = 0; i < policyList.length; i++){
     const policyPermission = await getSolidDataset( policyList[i], { fetch: fetch });
-    console.log(policyPermission);
-    /* const policyPermissionThing = `${policyList[i]}#permission1`
+    
+    // TODO: check if it is permission or prohibition
+    // get triples of policy i
+    const policyPermissionThing = `${policyList[i]}#permission1`
     const thing = getThing( policyPermission, policyPermissionThing);
     console.log(thing);
-    const targetData = getUrlAll(thing, ODRL.target);
+    /* const targetData = getUrlAll(thing, ODRL.target);
     for (var j = 0; j < selectedPersonalData.length; j++) {
       const pdToCompare = `https://w3id.org/oac/${selectedPersonalData[j]}`
       if(pdToCompare.localeCompare(targetData)){
