@@ -20,15 +20,13 @@
  */
 
 import React, {useRef} from 'react';
-import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
-/* import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
+import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
   getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
-import * as d3 from "d3"; */
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -108,7 +106,14 @@ export default function Home() {
 
   const getAuthorizedDataBtn = useRef();
   const getAuthorizedData = () => {
-    console.log('test button');
+    getPodUrlAll(session.info.webId).then(response => {
+      const podRoot = response[0];
+      const podPrivateContainer = `${podRoot}private/`;
+
+      console.log(podPrivateContainer, response);
+
+      // getPolicyFilenames(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
+    });
   }
 
   return (
