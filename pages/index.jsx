@@ -37,7 +37,9 @@ async function getDataSources(privateContainer, selectedPD, selectedPurpose, sel
     policiesContainer, {
     fetch: fetch
   });
-  console.log(policyDataset);
+  
+  const policyList = getContainedResourceUrlAll(policyDataset);
+  console.log(policyList);
 }
 
 export default function Home() {
