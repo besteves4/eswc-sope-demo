@@ -20,58 +20,58 @@
  */
 
 import React, {useRef} from 'react';
+import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
-import { Button } from "@inrupt/prism-react-components";
+/* import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
+  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
-
+import * as d3 from "d3"; */
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
-async function getPolicyFilenames(privateContainer, selectedPersonalData, selectedPurposes, selectedAccess) {
-  const policiesContainer = `${privateContainer}odrl_policies/`;
-  const policyDataset = await getSolidDataset(
+/* async function getPolicyFilenames(policiesContainer, filename, newPolicy) {
+  const myDataset = await getSolidDataset(
     policiesContainer, {
     fetch: fetch
   });
-  console.log(policyDataset);
-  const policyList = getContainedResourceUrlAll(policyDataset);
-  console.log(policyList);
+  console.log(myDataset, newPolicy);
+  const policyList = getContainedResourceUrlAll(myDataset);
+  console.log(filename, policyList);
 
-  const dataContainer = `${privateContainer}personal_data/`;
-  const personalDataset = await getSolidDataset(
-    dataContainer, {
-    fetch: fetch
-  });
-  console.log(personalDataset);
-  const personalDataFilesList = getContainedResourceUrlAll(personalDataset);
-
-  for (var i = 0; i < policyList.length; i++){
-    const policyPermission = await getSolidDataset( policyList[i], { fetch: fetch });
-    console.log(policyPermission);
-    const policyPermissionThing = `${policyList[i]}#permission1`
-    const thing = getThing( policyPermission, policyPermissionThing);
-    console.log(thing);
-    const targetData = getUrlAll(thing, ODRL.target);
-    for (var j = 0; j < selectedPersonalData.length; j++) {
-      const pdToCompare = `https://w3id.org/oac/${selectedPersonalData[j]}`
-      if(pdToCompare.localeCompare(targetData)){
-        for (var k = 0; k < personalDataFilesList.length; k++){
-          if(personalDataFilesList[k].endsWith(`${selectedPersonalData[j]}`)){
-            alert(`Access authorised to file stored at ${personalDataFilesList[k]}`)
-          }
-        }
-      }
+  const filenameSave = `${policiesContainer}${filename}`;
+  if(policyList.includes(filenameSave)){
+    alert("There is already a policy with that name, choose another");
+  } else {
+    try {
+      await saveSolidDatasetAt(filenameSave,
+        newPolicy, { fetch: fetch });
+    } catch (error) {
+      console.log(error);
     }
   }
-}
+} */
 
 export default function Home() {
   const { session } = useSession();
+
+  let chosenPolicy = ''
+  const policyTypes = [
+    { value: 'permission', label: 'Permission' },
+    { value: 'prohibition', label: 'Prohibition' }
+  ]
+  const handlePolicyType = (selectedOption) => {
+    chosenPolicy = selectedOption.value;
+  }
+  const customStyles = {
+    container: provided => ({
+      ...provided,
+      width: 200
+    })
+  };
   
   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach(k => {
@@ -121,50 +121,112 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  const getAuthorizedDataBtn = useRef();
-  const getAuthorizedData = () => {
+  const inputValue = useRef();
+/*   const generatePolicyBtn = useRef();
+  const generatePolicy = () => {
+    // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
+    let newPolicy = createSolidDataset();
+
+    const dpv = "http://www.w3.org/ns/dpv#";
+    const odrl = "http://www.w3.org/ns/odrl/2/";
+    const oac = "https://w3id.org/oac/";
+
+    const oacPurpose = `${oac}Purpose`;
+    const odrlPolicyType = `${odrl}${chosenPolicy}`;
+
+    let policy = createThing({name: "policy1"});
+    let policyType = createThing({name: chosenPolicy+"1"});
+    policy = addUrl(policy, RDF.type, ODRL.Policy);
+    policy = addUrl(policy, odrlPolicyType, policyType);
+    newPolicy = setThing(newPolicy, policy);
+
+    let purposeConstraint = createThing({name: "purposeConstraint"});
+
+    for (var i = 0; i < selectedPD.length; i++) {
+      var pd = selectedPD[i];
+      policyType = addUrl(policyType, ODRL.target, `${oac}${pd}`);
+    }
+
+    for (var i = 0; i < selectedAccess.length; i++) {
+      var acc = selectedAccess[i];
+      policyType = addUrl(policyType, ODRL.action, `${oac}${acc}`);
+    }
+
+    policyType = addUrl(policyType, ODRL.assigner, session.info.webId);
+    policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
+    newPolicy = setThing(newPolicy, policyType);
+
+    purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
+    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
+
+    for (var i = 0; i < selectedPurpose.length; i++) {
+      var purp = selectedPurpose[i];
+      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
+    }
+
+    newPolicy = setThing(newPolicy, purposeConstraint);
 
     getPodUrlAll(session.info.webId).then(response => {
-      const podRoot = response[0];
-      const podPrivateContainer = `${podRoot}private/`;
-      getPolicyFilenames(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
-    });
-  }
+
+      if (chosenPolicy === "") {
+        alert("Choose a type of policy");
+      } else if (selectedPD.length < 1) {
+        alert("Choose the categories of personal data of the policy");
+      } else if (selectedPurpose.length < 1) {
+        alert("Choose the purpose of the policy");
+      } else if (selectedAccess.length < 1) {
+        alert("Choose the access modes applicable to the policy");
+      } else {
+        const podRoot = response[0];
+        const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
+        const filename = inputValue.current.state.value;
+        const filenameSave = `${podPoliciesContainer}${filename}`;
+        // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
+        try {
+          // Save the SolidDataset
+          saveSolidDatasetAt(filenameSave,
+              newPolicy, { fetch: fetch });
+        } catch (error) {
+          console.log(error);
+        }
+        
+      }
+    })
+  } */
 
   return (
     <div>
-      {!session.info.isLoggedIn &&
-        <div class="logged-out">
-          Demonstrator used to simulate an app request for personal data and the respective response
-        </div>
-      }
       {session.info.isLoggedIn &&
         <div>
-          <div class="logged-in">
-            Demonstrator used to simulate an app request for personal data and the respective response
+          <div class="container">
+            <div class="">
+              <p><b>Choose type of policy:</b></p>
+              <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
+            </div>
           </div>
           <div class="container">
-            <div class="" style="text-align: center;">
+            <div class="">
               <p><b>Choose type of personal data:</b></p>
               <DropdownTreeSelect data={personalData} onChange={handlePersonalData} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="" style="text-align: center;">
+            <div class="">
               <p><b>Choose purpose:</b></p>
               <DropdownTreeSelect data={purpose} onChange={handlePurpose} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="" style="text-align: center;">
-              <p><b>Choose processing Activities:</b></p>
+            <div class="">
+              <p><b>Choose applicable access modes:</b></p>
               <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
             </div>
           </div>
           <div class="container">
-            <div class="bottom-container" style="text-align: center;">
-              <Button variant="small" value="permission" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Execute</Button>
-            </div>
+{/*             <div class="bottom-container">
+              <p><b>Generate policy:</b></p>
+              <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
+            </div> */}
           </div>
         </div>        
       }

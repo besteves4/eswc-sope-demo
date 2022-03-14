@@ -5,6 +5,6 @@ export default () => ({
   libraryRepoUrl: packageJson.repository.url,
   demoRepoUrl: packageJson.repository.url,
   copyright: "Copyright 2021 Inrupt, Inc.",
-  demoTitle: "SOAP",
-  demoDescription: "A Solid ODRL Access Policies editor",
+  demoTitle: "ESWC demo",
+  demoDescription: "ESWC Demonstrator used to simulate an app request for personal data and the respective response",
 });
