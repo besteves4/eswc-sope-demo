@@ -23,8 +23,8 @@ import React, {useRef} from 'react';
 import Select from 'react-select';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
-/* import { Button } from "@inrupt/prism-react-components";
-import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
+import { Button } from "@inrupt/prism-react-components";
+/* import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
   getPodUrlAll, getSolidDataset, getContainedResourceUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
@@ -57,21 +57,6 @@ import purpose from "./purposes.json";
 
 export default function Home() {
   const { session } = useSession();
-
-  let chosenPolicy = ''
-  const policyTypes = [
-    { value: 'permission', label: 'Permission' },
-    { value: 'prohibition', label: 'Prohibition' }
-  ]
-  const handlePolicyType = (selectedOption) => {
-    chosenPolicy = selectedOption.value;
-  }
-  const customStyles = {
-    container: provided => ({
-      ...provided,
-      width: 200
-    })
-  };
   
   const assignObjectPaths = (obj, stack) => {
     Object.keys(obj).forEach(k => {
@@ -121,89 +106,15 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  const inputValue = useRef();
-/*   const generatePolicyBtn = useRef();
-  const generatePolicy = () => {
-    // TODO: chosenPolicy/selectedPD/selectedPurpose have to be gathered only when generatePolicy is activated
-    let newPolicy = createSolidDataset();
-
-    const dpv = "http://www.w3.org/ns/dpv#";
-    const odrl = "http://www.w3.org/ns/odrl/2/";
-    const oac = "https://w3id.org/oac/";
-
-    const oacPurpose = `${oac}Purpose`;
-    const odrlPolicyType = `${odrl}${chosenPolicy}`;
-
-    let policy = createThing({name: "policy1"});
-    let policyType = createThing({name: chosenPolicy+"1"});
-    policy = addUrl(policy, RDF.type, ODRL.Policy);
-    policy = addUrl(policy, odrlPolicyType, policyType);
-    newPolicy = setThing(newPolicy, policy);
-
-    let purposeConstraint = createThing({name: "purposeConstraint"});
-
-    for (var i = 0; i < selectedPD.length; i++) {
-      var pd = selectedPD[i];
-      policyType = addUrl(policyType, ODRL.target, `${oac}${pd}`);
-    }
-
-    for (var i = 0; i < selectedAccess.length; i++) {
-      var acc = selectedAccess[i];
-      policyType = addUrl(policyType, ODRL.action, `${oac}${acc}`);
-    }
-
-    policyType = addUrl(policyType, ODRL.assigner, session.info.webId);
-    policyType = addUrl(policyType, ODRL.constraint, purposeConstraint);
-    newPolicy = setThing(newPolicy, policyType);
-
-    purposeConstraint = addUrl(purposeConstraint, ODRL.leftOperand, oacPurpose);
-    purposeConstraint = addUrl(purposeConstraint, ODRL.operator, ODRL.isA);
-
-    for (var i = 0; i < selectedPurpose.length; i++) {
-      var purp = selectedPurpose[i];
-      purposeConstraint = addUrl(purposeConstraint, ODRL.rightOperand, `${dpv}${purp}`);
-    }
-
-    newPolicy = setThing(newPolicy, purposeConstraint);
-
-    getPodUrlAll(session.info.webId).then(response => {
-
-      if (chosenPolicy === "") {
-        alert("Choose a type of policy");
-      } else if (selectedPD.length < 1) {
-        alert("Choose the categories of personal data of the policy");
-      } else if (selectedPurpose.length < 1) {
-        alert("Choose the purpose of the policy");
-      } else if (selectedAccess.length < 1) {
-        alert("Choose the access modes applicable to the policy");
-      } else {
-        const podRoot = response[0];
-        const podPoliciesContainer = `${podRoot}private/odrl_policies/`;
-        const filename = inputValue.current.state.value;
-        const filenameSave = `${podPoliciesContainer}${filename}`;
-        // getPolicyFilenames(podPoliciesContainer, filename, newPolicy);
-        try {
-          // Save the SolidDataset
-          saveSolidDatasetAt(filenameSave,
-              newPolicy, { fetch: fetch });
-        } catch (error) {
-          console.log(error);
-        }
-        
-      }
-    })
-  } */
+  const getAuthorizedDataBtn = useRef();
+  const getAuthorizedData = () => {
+    console.log('test button');
+  }
 
   return (
     <div>
       {session.info.isLoggedIn &&
         <div>
-          <div class="container">
-            <div class="">
-              <p><b>Choose type of policy:</b></p>
-              <Select styles={customStyles} id="policyType" label="Policy Type" options={policyTypes} onChange={handlePolicyType}></Select>
-            </div>
-          </div>
           <div class="container">
             <div class="">
               <p><b>Choose type of personal data:</b></p>
@@ -223,10 +134,10 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-{/*             <div class="bottom-container">
+            <div class="bottom-container">
               <p><b>Generate policy:</b></p>
-              <Button variant="small" value="permission" onClick={generatePolicy} ref={generatePolicyBtn}>Generate</Button>
-            </div> */}
+              <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+            </div>
           </div>
         </div>        
       }
