@@ -34,20 +34,32 @@ import purpose from "./purposes.json";
 async function getDataSources(privateContainer, selectedPD, selectedPurpose, selectedAccess) {
   // get list of ODRL policies
   const policiesContainer = `${privateContainer}odrl_policies/`;
-  const policyDataset = await getSolidDataset(
-    policiesContainer, {
-    fetch: fetch
-  });
+  const policyDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
   const policyList = getContainedResourceUrlAll(policyDataset);
   
   // get list of files in personal_data/ container
   const dataContainer = `${privateContainer}personal_data/`;
-  const personalDataset = await getSolidDataset(
-    dataContainer, {
-    fetch: fetch
-  });
+  const personalDataset = await getSolidDataset(dataContainer, { fetch: fetch });
   const personalDataFilesList = getContainedResourceUrlAll(personalDataset);
-  console.log(personalDataFilesList);
+  
+  for (var i = 0; i < policyList.length; i++){
+    const policyPermission = await getSolidDataset( policyList[i], { fetch: fetch });
+    console.log(policyPermission);
+    /* const policyPermissionThing = `${policyList[i]}#permission1`
+    const thing = getThing( policyPermission, policyPermissionThing);
+    console.log(thing);
+    const targetData = getUrlAll(thing, ODRL.target);
+    for (var j = 0; j < selectedPersonalData.length; j++) {
+      const pdToCompare = `https://w3id.org/oac/${selectedPersonalData[j]}`
+      if(pdToCompare.localeCompare(targetData)){
+        for (var k = 0; k < personalDataFilesList.length; k++){
+          if(personalDataFilesList[k].endsWith(`${selectedPersonalData[j]}`)){
+            alert(`Access authorised to file stored at ${personalDataFilesList[k]}`)
+          }
+        }
+      }
+    } */
+  }
 }
 
 export default function Home() {
