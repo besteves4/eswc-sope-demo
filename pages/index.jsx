@@ -31,7 +31,7 @@ import { fetch } from "@inrupt/solid-client-authn-browser";
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
 
-async function getDataSources(privateContainer, selectedPD, selectedPurpose, selectedAccess) {
+async function getDataSources(privateContainer, selectedPersonalData, selectedPurpose, selectedAccess) {
   // get list of ODRL policies
   const policiesContainer = `${privateContainer}odrl_policies/`;
   const policyDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
@@ -52,17 +52,19 @@ async function getDataSources(privateContainer, selectedPD, selectedPurpose, sel
     
     // get type of data targeted by the policy
     const targetData = getUrlAll(thing, ODRL.target);
-    console.log(targetData);
-    /* for (var j = 0; j < selectedPersonalData.length; j++) {
+    console.log(targetData[0]);
+    for (var j = 0; j < selectedPersonalData.length; j++) {
       const pdToCompare = `https://w3id.org/oac/${selectedPersonalData[j]}`
-      if(pdToCompare.localeCompare(targetData)){
-        for (var k = 0; k < personalDataFilesList.length; k++){
+      // TODO: deal with targetData.length > 1
+      if(pdToCompare.localeCompare(targetData[0])){
+        console.log(pdToCompare);
+/*         for (var k = 0; k < personalDataFilesList.length; k++){
           if(personalDataFilesList[k].endsWith(`${selectedPersonalData[j]}`)){
             alert(`Access authorised to file stored at ${personalDataFilesList[k]}`)
           }
-        }
+        } */
       }
-    } */
+    }
   }
 }
 
