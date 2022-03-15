@@ -45,6 +45,7 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
   const personalDataset = await getSolidDataset(dataContainer, { fetch: fetch });
   const personalDataFilesList = getContainedResourceUrlAll(personalDataset);
   
+  const datasources = []
   for (var i = 0; i < policyList.length; i++){
     const policyPermission = await getSolidDataset( policyList[i], { fetch: fetch });
     
@@ -65,12 +66,13 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
           const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
           const targetDataURL = getUrlAll(personalDataFileThing, RDF.type);
           if(targetDataURL.indexOf(`${dpvpd}${selectedPersonalData[j]}`) > -1){
-            console.log(personalDataFilesList[k]);
+            datasources.indexOf(personalDataFilesList[k]) === -1 ? datasources.push(personalDataFilesList[k]) : console.log("This item already exists");
           }
         }
       }
     }
   }
+  return(datasources);
 }
 
 export default function Home() {
@@ -130,7 +132,8 @@ export default function Home() {
       const podRoot = response[0];
       const podPrivateContainer = `${podRoot}private/`;
 
-      getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
+      const dataSources = getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
+      console.log(dataSources);
     });
   }
 
