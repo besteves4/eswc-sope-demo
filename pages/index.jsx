@@ -136,7 +136,10 @@ export default function Home() {
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
+        console.log(dataSources);
+        console.log(showDataSources);
         dataSources.length > 0 ? showDataSources = true : showDataSources = false;
+        console.log(showDataSources);
       })
     }); 
   }
