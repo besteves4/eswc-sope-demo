@@ -127,7 +127,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  /* const getAuthorizedDataBtn = useRef();
+  /* const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
       const podRoot = response[0];
@@ -138,6 +138,8 @@ export default function Home() {
       })
     }); 
   } */
+
+  const dataSources = ["https://github.com/besteves4/eswc-soap-demo", "https://github.com/besteves4/eswc-soap-demo"]
 
   return (
     <div>
@@ -169,13 +171,14 @@ export default function Home() {
           </div>
           <div class="container">
             <div class="bottom-container">
-              <ListGroup>
-                <ListGroupItem>Cras justo odio</ListGroupItem>
-                <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                <ListGroupItem>Morbi leo risus</ListGroupItem>
-                <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
-                <ListGroupItem>Vestibulum at eros</ListGroupItem>
-              </ListGroup>
+            <ListGroup>
+              {dataSources.map(source => (
+                <ListGroup.Item className="modal-bg">
+                  <Button style={{ backgroundColor: "black", opacity: ".8", color: "white", borderColor: "red" }} 
+                    className="inputFont w-100" name={source} value={source}>Classics</Button>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
             </div>
           </div>
         </div>        
