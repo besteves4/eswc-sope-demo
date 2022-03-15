@@ -172,9 +172,9 @@ export default function Home() {
           <div class="container">
             <div class="bottom-container">
             <ListGroup>
-              {dataSources.map(source => (
+              {dataSources.map((source, index) => (
                 <ListGroupItem className="modal-bg">
-                  <Button className="inputFont w-100" name={source} value={source}></Button>
+                  <Button className="inputFont w-100" key={index}>{source}</Button>
                 </ListGroupItem>
               ))}
             </ListGroup>
