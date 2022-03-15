@@ -23,11 +23,11 @@ import React, {useRef} from 'react';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
+import { ListGroupItem, ListGroup } from "reactstrap";
 /* import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
   getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser"; */
-import { ListGroupItem, ListGroup } from "reactstrap";
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -174,7 +174,10 @@ export default function Home() {
             <ListGroup>
               {dataSources.map((source, index) => (
                 <ListGroupItem className="modal-bg">
-                  <Button className="inputFont w-100" key={index}>{source}</Button>
+                  <Button className="inputFont w-100" key={index}
+                      onClick={() =>  navigator.clipboard.writeText(source)}>
+                    {source}
+                  </Button>
                 </ListGroupItem>
               ))}
             </ListGroup>
