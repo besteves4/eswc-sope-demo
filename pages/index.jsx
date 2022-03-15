@@ -127,6 +127,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
+  const [state, setState] = useState('start')
   let dataSources = []
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
@@ -137,11 +138,10 @@ export default function Home() {
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
         console.log(dataSources);
+        setState('add-trip')
       })
     }); 
   }
-
-  const [state, setState] = useState('start')
 
   return (
     <div>
@@ -166,17 +166,15 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            <div class="bottom-container">
-              <p><b>Generate policy:</b></p>
-              <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-            </div>
-          </div>
-          <div>
-            {state === 'start' && (
-              <AddTripButton addTrip={() => setState('add-trip') } />
-            )}
+            <div>
+              {state === 'start' && 
+                <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+              }
 
-            {state === 'add-trip' && <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>}
+              {state === 'add-trip' && 
+                <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
+              }
+            </div>
           </div>
         </div>        
       }
