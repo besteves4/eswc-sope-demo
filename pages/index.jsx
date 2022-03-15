@@ -174,8 +174,7 @@ export default function Home() {
             <ListGroup>
               {dataSources.map(source => (
                 <ListGroupItem className="modal-bg">
-                  <Button style={{ backgroundColor: "black", opacity: ".8", color: "white", borderColor: "red" }} 
-                    className="inputFont w-100" name={source} value={source}>Classics</Button>
+                  <Button className="inputFont w-100" name={source} value={source}></Button>
                 </ListGroupItem>
               ))}
             </ListGroup>
