@@ -175,7 +175,7 @@ export default function Home() {
         </div>        
       }
       {
-        showDataSources?{dataSources}:null
+        showDataSources?<p><b>{dataSources[0]}</b></p>:null
       }
     </div>
   );
