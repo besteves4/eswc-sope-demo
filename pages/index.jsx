@@ -127,6 +127,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
+  let dataSources = []
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
