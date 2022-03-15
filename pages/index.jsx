@@ -24,10 +24,9 @@ import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
 import { ListGroupItem, ListGroup } from "reactstrap";
-/* import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
-  getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
+import { getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
-import { fetch } from "@inrupt/solid-client-authn-browser"; */
+import { fetch } from "@inrupt/solid-client-authn-browser";
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -35,7 +34,7 @@ import purpose from "./purposes.json";
 const dpvpd = "https://www.w3id.org/dpv/pd#" ;
 const oac = "https://w3id.org/oac/" ;
 
-/* async function getDataSources(privateContainer, selectedPersonalData, selectedPurpose, selectedAccess) {
+async function getDataSources(privateContainer, selectedPersonalData, selectedPurpose, selectedAccess) {
   // get list of ODRL policies
   const policiesContainer = `${privateContainer}odrl_policies/`;
   const policyDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
@@ -67,14 +66,14 @@ const oac = "https://w3id.org/oac/" ;
           const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
           const targetDataURL = getUrlAll(personalDataFileThing, RDF.type);
           if(targetDataURL.indexOf(`${dpvpd}${selectedPersonalData[j]}`) > -1){
-            datasources.indexOf(personalDataFilesList[k]) === -1 ? datasources.push(personalDataFilesList[k]) : null;
+            !datasources.includes(personalDataFilesList[k]) ? datasources.push(personalDataFilesList[k]) : null;
           }
         }
       }
     }
   }
   return(datasources);
-} */
+}
 
 export default function Home() {
   const { session } = useSession();
@@ -127,19 +126,18 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  /* const getAuthorizedDataBtn = useRef()
+  let dataSources = []
+  const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
       const podRoot = response[0];
       const podPrivateContainer = `${podRoot}private/`;
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
-        console.log(result);
+        dataSources = dataSources.concat(result);
       })
     }); 
-  } */
-
-  const dataSources = ["https://github.com/besteves4/eswc-soap-demo", "https://github.com/besteves4/eswc-soap-demo"]
+  }
 
   return (
     <div>
@@ -166,7 +164,7 @@ export default function Home() {
           <div class="container">
             <div class="bottom-container">
               <p><b>Generate policy:</b></p>
-              {/* <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button> */}
+              <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
             </div>
           </div>
           <div class="container">
