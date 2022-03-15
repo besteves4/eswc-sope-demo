@@ -132,9 +132,12 @@ export default function Home() {
       const podRoot = response[0];
       const podPrivateContainer = `${podRoot}private/`;
 
-      const dataSources = getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
-      console.log(dataSources);
-    });
+      /* const dataSources = getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
+      console.log(dataSources); */
+      getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
+        console.log(result);
+      })
+    }); 
   }
 
   return (
