@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React, {useRef} from 'react';
+import React, { useRef, useState } from 'react';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
@@ -27,6 +27,7 @@ import { ListGroupItem, ListGroup } from "reactstrap";
 import { getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
+import AddTripButton from "./addTripButton";
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -126,8 +127,6 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  let dataSources = []
-  let showDataSources = false;
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
@@ -137,12 +136,11 @@ export default function Home() {
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
         console.log(dataSources);
-        console.log(showDataSources);
-        dataSources.length > 0 ? showDataSources = true : showDataSources = false;
-        console.log(showDataSources);
       })
     }); 
   }
+
+  const [state, setState] = useState('start')
 
   return (
     <div>
@@ -172,10 +170,14 @@ export default function Home() {
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
             </div>
           </div>
+          <div>
+            {state === 'start' && (
+              <AddTripButton addTrip={() => setState('add-trip') } />
+            )}
+
+            {state === 'add-trip' && <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>}
+          </div>
         </div>        
-      }
-      {
-        showDataSources?<p><b>{dataSources[0]}</b></p>:null
       }
     </div>
   );
