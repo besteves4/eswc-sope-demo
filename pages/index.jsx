@@ -22,8 +22,8 @@
 import React, {useRef} from 'react';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
-/* import { Button } from "@inrupt/prism-react-components";
-import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
+import { Button } from "@inrupt/prism-react-components";
+/* import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
   getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser"; */
@@ -173,10 +173,10 @@ export default function Home() {
             <div class="bottom-container">
             <ListGroup>
               {dataSources.map(source => (
-                <ListGroup.Item className="modal-bg">
+                <ListGroupItem className="modal-bg">
                   <Button style={{ backgroundColor: "black", opacity: ".8", color: "white", borderColor: "red" }} 
                     className="inputFont w-100" name={source} value={source}>Classics</Button>
-                </ListGroup.Item>
+                </ListGroupItem>
               ))}
             </ListGroup>
             </div>
