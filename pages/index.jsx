@@ -52,17 +52,15 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
     
     // get type of data targeted by the policy
     const targetData = getUrlAll(thing, ODRL.target);
-    console.log(targetData[0]);
+    
     for (var j = 0; j < selectedPersonalData.length; j++) {
       const pdToCompare = `https://w3id.org/oac/${selectedPersonalData[j]}`
       // TODO: deal with targetData.length > 1
-      if(pdToCompare.localeCompare(targetData[0])){
-        console.log(pdToCompare);
-/*         for (var k = 0; k < personalDataFilesList.length; k++){
-          if(personalDataFilesList[k].endsWith(`${selectedPersonalData[j]}`)){
-            alert(`Access authorised to file stored at ${personalDataFilesList[k]}`)
-          }
-        } */
+      if(pdToCompare === targetData[0]){
+        for (var k = 0; k < personalDataFilesList.length; k++){
+          const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
+          console.log(personalDataFile);
+        }
       }
     }
   }
