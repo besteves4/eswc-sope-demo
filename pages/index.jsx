@@ -127,6 +127,7 @@ export default function Home() {
   };
 
   let dataSources = []
+  let showDataSources = false;
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
@@ -135,6 +136,7 @@ export default function Home() {
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
+        dataSources.length > 0 ? showDataSources = true : showDataSources = false;
       })
     }); 
   }
@@ -167,21 +169,10 @@ export default function Home() {
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
             </div>
           </div>
-          <div class="container">
-            <div class="bottom-container">
-            <ListGroup>
-              {dataSources.map((source, index) => (
-                <ListGroupItem className="modal-bg">
-                  <Button className="inputFont w-100" key={index}
-                      onClick={() =>  navigator.clipboard.writeText(source)}>
-                    {source}
-                  </Button>
-                </ListGroupItem>
-              ))}
-            </ListGroup>
-            </div>
-          </div>
         </div>        
+      }
+      {
+        showDataSources?{dataSources}:null
       }
     </div>
   );
