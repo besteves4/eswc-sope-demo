@@ -59,7 +59,9 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
       if(pdToCompare === targetData[0]){
         for (var k = 0; k < personalDataFilesList.length; k++){
           const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
-          console.log(personalDataFile);
+          const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
+          const targetDataURL = getUrlAll(personalDataFileThing, RDF.type);
+          console.log(targetDataURL);
         }
       }
     }
