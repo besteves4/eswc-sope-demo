@@ -22,11 +22,12 @@
 import React, {useRef} from 'react';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
-import { Button } from "@inrupt/prism-react-components";
+/* import { Button } from "@inrupt/prism-react-components";
 import { createSolidDataset, createThing, setThing, addUrl, saveSolidDatasetAt, 
   getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
-import { fetch } from "@inrupt/solid-client-authn-browser";
+import { fetch } from "@inrupt/solid-client-authn-browser"; */
+import { ListGroupItem, ListGroup } from "reactstrap";
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -34,7 +35,7 @@ import purpose from "./purposes.json";
 const dpvpd = "https://www.w3id.org/dpv/pd#" ;
 const oac = "https://w3id.org/oac/" ;
 
-async function getDataSources(privateContainer, selectedPersonalData, selectedPurpose, selectedAccess) {
+/* async function getDataSources(privateContainer, selectedPersonalData, selectedPurpose, selectedAccess) {
   // get list of ODRL policies
   const policiesContainer = `${privateContainer}odrl_policies/`;
   const policyDataset = await getSolidDataset(policiesContainer, { fetch: fetch });
@@ -73,7 +74,7 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
     }
   }
   return(datasources);
-}
+} */
 
 export default function Home() {
   const { session } = useSession();
@@ -126,19 +127,17 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  const getAuthorizedDataBtn = useRef();
+  /* const getAuthorizedDataBtn = useRef();
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
       const podRoot = response[0];
       const podPrivateContainer = `${podRoot}private/`;
 
-      /* const dataSources = getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess);
-      console.log(dataSources); */
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         console.log(result);
       })
     }); 
-  }
+  } */
 
   return (
     <div>
@@ -165,7 +164,18 @@ export default function Home() {
           <div class="container">
             <div class="bottom-container">
               <p><b>Generate policy:</b></p>
-              <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+              {/* <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button> */}
+            </div>
+          </div>
+          <div class="container">
+            <div class="bottom-container">
+              <ListGroup>
+                <ListGroupItem>Cras justo odio</ListGroupItem>
+                <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
+                <ListGroupItem>Morbi leo risus</ListGroupItem>
+                <ListGroupItem>Porta ac consectetur ac</ListGroupItem>
+                <ListGroupItem>Vestibulum at eros</ListGroupItem>
+              </ListGroup>
             </div>
           </div>
         </div>        
