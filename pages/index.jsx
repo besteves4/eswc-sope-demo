@@ -137,9 +137,10 @@ export default function Home() {
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
-        console.log(dataSources);
-        setState('add-trip')
       })
+
+      setState('add-trip');
+      console.log(dataSources);
     }); 
   }
 
@@ -175,7 +176,7 @@ export default function Home() {
               }
               {state === 'add-trip' && 
                 <div>
-                  <div class="bottom-container">
+                  <div class="container">
                     <p><b>Generate policy:</b></p>
                     <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
                   </div>
