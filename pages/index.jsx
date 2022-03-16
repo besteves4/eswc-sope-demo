@@ -27,7 +27,6 @@ import { ListGroupItem, ListGroup } from "reactstrap";
 import { getPodUrlAll, getSolidDataset, getContainedResourceUrlAll, getThing, getUrlAll } from "@inrupt/solid-client";
 import { RDF, ODRL } from "@inrupt/vocab-common-rdf";
 import { fetch } from "@inrupt/solid-client-authn-browser";
-import AddTripButton from "./addTripButton";
 
 import personalData from "./personaldata.json";
 import purpose from "./purposes.json";
@@ -140,8 +139,6 @@ export default function Home() {
     }); 
   }
   
-  console.log(display);
-
   return (
     <div>
       {session.info.isLoggedIn &&
