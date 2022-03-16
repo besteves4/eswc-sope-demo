@@ -127,7 +127,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  const [state, setState] = useState('start')
+  let state = 'start';
   let dataSources = []
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
@@ -137,7 +137,7 @@ export default function Home() {
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
-        setState('add-trip');
+        state = 'add-trip';
         console.log(dataSources);
         console.log(state);
       })
