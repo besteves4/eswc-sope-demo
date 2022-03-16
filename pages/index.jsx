@@ -127,11 +127,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  /* const [state, setState] = useState('start')
-  const dataSources = [] */
-  // const [display, setDisplay] = useState("");
   const [display, setDisplay] = useState([]);
-  const values = [];
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
@@ -139,12 +135,7 @@ export default function Home() {
       const podPrivateContainer = `${podRoot}private/`;
       
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
-        // dataSources = dataSources.concat(result);
-        setDisplay(result)
-        /* values.push(result);
-        setDisplay(values.join(""))
-        setState('add-trip')
-        console.log(dataSources); */
+        setDisplay(result);
       })
     }); 
   }
@@ -174,11 +165,9 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            <div>
             <div class="bottom-container">
               <p><b>Generate policy:</b></p>
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-              {/* {display} */}
               <div class="container">
                 <div class="bottom-container">
                   <ListGroup>
@@ -193,35 +182,6 @@ export default function Home() {
                   </ListGroup>
                 </div>
               </div>
-            </div>
-              {/* {state === 'start' && 
-                <div class="bottom-container">
-                  <p><b>Generate policy:</b></p>
-                  <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-                </div>
-              }
-              {state === 'add-trip' && 
-                <div>
-                  <div class="container">
-                    <p><b>Generate policy:</b></p>
-                    <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-                  </div>
-                  <div class="container">
-                    <div class="bottom-container">
-                      <ListGroup>
-                        {dataSources.map((source, index) => (
-                          <ListGroupItem className="modal-bg">
-                            <Button className="inputFont w-100" key={index}
-                                onClick={() =>  navigator.clipboard.writeText(source)}>
-                                {source}
-                            </Button>
-                          </ListGroupItem>
-                        ))}
-                      </ListGroup>
-                    </div>
-                  </div>
-                </div>
-              } */}
             </div>
           </div>
         </div>        
