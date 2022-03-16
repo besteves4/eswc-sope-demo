@@ -140,7 +140,7 @@ export default function Home() {
   }
   
   return (
-    <div>
+    <div class="top-container">
       {session.info.isLoggedIn &&
         <div>
           <div class="container">
