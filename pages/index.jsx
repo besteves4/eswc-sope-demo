@@ -174,6 +174,22 @@ export default function Home() {
           </div>
         </div>        
       }
+      {state === 'add-trip' &&
+        <div class="container">
+          <div class="bottom-container">
+            <ListGroup>
+              {dataSources.map((source, index) => (
+                <ListGroupItem className="modal-bg">
+                  <Button className="inputFont w-100" key={index}
+                      onClick={() =>  navigator.clipboard.writeText(source)}>
+                    {source}
+                  </Button>
+                </ListGroupItem>
+              ))}
+            </ListGroup>
+          </div>
+        </div>
+      }
     </div>
   );
 }
