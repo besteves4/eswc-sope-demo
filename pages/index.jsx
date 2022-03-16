@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
