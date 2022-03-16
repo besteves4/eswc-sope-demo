@@ -167,35 +167,9 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            <div>
-              {state === 'start' && 
-                <div class="bottom-container">
-                  <p><b>Generate policy:</b></p>
-                  <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-                </div>
-              }
-              {state === 'add-trip' && 
-                <div>
-                  <div class="container">
-                    <p><b>Generate policy:</b></p>
-                    <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-                  </div>
-                  <div class="container">
-                    <div class="bottom-container">
-                      <ListGroup>
-                        {dataSources.map((source, index) => (
-                          <ListGroupItem className="modal-bg">
-                            <Button className="inputFont w-100" key={index}
-                                onClick={() =>  navigator.clipboard.writeText(source)}>
-                              {source}
-                            </Button>
-                          </ListGroupItem>
-                        ))}
-                      </ListGroup>
-                    </div>
-                  </div>
-                </div>
-              }
+            <div class="bottom-container">
+              <p><b>Generate policy:</b></p>
+              <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
             </div>
           </div>
         </div>        
