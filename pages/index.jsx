@@ -137,10 +137,10 @@ export default function Home() {
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
+        setState('add-trip');
+        console.log(dataSources);
+        console.log(state);
       })
-
-      setState('add-trip');
-      console.log(dataSources);
     }); 
   }
 
