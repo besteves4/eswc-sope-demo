@@ -162,26 +162,27 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            <div class="bottom-container">
+            {/* <div class="bottom-container"> */}
+            <div class="">
               <p><b>Generate policy:</b></p>
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-              <div class="container">
-                <div class="bottom-container">
-                  <ListGroup>
-                    {display.map((source, index) => (
-                      <ListGroupItem className="modal-bg">
-                        <Button className="inputFont w-100" key={index}
-                            onClick={() =>  navigator.clipboard.writeText(source)}>
-                            {source}
-                        </Button>
-                      </ListGroupItem>
-                    ))}
-                  </ListGroup>
-                </div>
-              </div>
             </div>
           </div>
-        </div>        
+          <div class="container">
+            <div class="">
+              <ListGroup>
+                {display.map((source, index) => (
+                  <ListGroupItem className="modal-bg">
+                    <Button className="inputFont w-100" key={index}
+                        onClick={() =>  navigator.clipboard.writeText(source)}>
+                        {source}
+                    </Button>
+                  </ListGroupItem>
+                ))}
+              </ListGroup>
+            </div>
+          </div>
+        </div>       
       }
     </div>
   );
