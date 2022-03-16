@@ -56,10 +56,10 @@ body,
 }
 
 .bottom-container {
-  padding-bottom:50px;
+  padding-bottom:40px;
 }
 
-.list-item{
+.list-group-item{
   padding-bottom:10px;
 }
 
