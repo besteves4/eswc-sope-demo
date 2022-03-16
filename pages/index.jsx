@@ -129,21 +129,27 @@ export default function Home() {
 
   const [state, setState] = useState('start')
   const dataSources = []
+  const [effectLogs, setEffectLogs] = useState([])
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
       const podRoot = response[0];
       const podPrivateContainer = `${podRoot}private/`;
-
+      
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
         setState('add-trip')
         console.log(dataSources);
-        console.log(state);
       })
     }); 
   }
-  console.log(dataSources);
+  useLayoutEffect(
+    () => {
+      setEffectLogs(prevEffectLogs => [...prevEffectLogs, 'effect fn has been invoked'])
+    },
+    [state]
+  )
+  
   return (
     <div>
       {session.info.isLoggedIn &&
@@ -182,7 +188,7 @@ export default function Home() {
                   </div>
                   <div class="container">
                     <div class="bottom-container">
-                      <ListGroup>
+                      {/* <ListGroup>
                         {dataSources.map((source, index) => (
                           <ListGroupItem className="modal-bg">
                             <Button className="inputFont w-100" key={index}
@@ -191,7 +197,10 @@ export default function Home() {
                             </Button>
                           </ListGroupItem>
                         ))}
-                      </ListGroup>
+                      </ListGroup> */}
+                      {effectLogs.map((effect, index) => (
+                        <div key={index}>{'🍔'.repeat(index) + effect}</div>
+                      ))}
                     </div>
                   </div>
                 </div>
