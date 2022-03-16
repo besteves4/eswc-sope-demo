@@ -129,7 +129,7 @@ export default function Home() {
 
   /* const [state, setState] = useState('start')
   const dataSources = [] */
-  const [display, setDisplay] = React.useState("");
+  const [display, setDisplay] = useState("");
   const values = [];
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
@@ -147,6 +147,8 @@ export default function Home() {
     }); 
   }
   
+  console.log(display);
+
   return (
     <div>
       {session.info.isLoggedIn &&
@@ -174,7 +176,21 @@ export default function Home() {
             <div class="bottom-container">
               <p><b>Generate policy:</b></p>
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
-              {display}
+              {/* {display} */}
+              <div class="container">
+                <div class="bottom-container">
+                  <ListGroup>
+                    {display.map((source, index) => (
+                      <ListGroupItem className="modal-bg">
+                        <Button className="inputFont w-100" key={index}
+                            onClick={() =>  navigator.clipboard.writeText(source)}>
+                            {source}
+                        </Button>
+                      </ListGroupItem>
+                    ))}
+                  </ListGroup>
+                </div>
+              </div>
             </div>
               {/* {state === 'start' && 
                 <div class="bottom-container">
