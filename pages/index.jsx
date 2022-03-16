@@ -168,11 +168,32 @@ export default function Home() {
           <div class="container">
             <div>
               {state === 'start' && 
-                <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+                <div class="bottom-container">
+                  <p><b>Generate policy:</b></p>
+                  <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+                </div>
               }
-
               {state === 'add-trip' && 
-                <DropdownTreeSelect data={access} onChange={handleAccess} className="tree-select"/>
+                <div>
+                  <div class="bottom-container">
+                    <p><b>Generate policy:</b></p>
+                    <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+                  </div>
+                  <div class="container">
+                    <div class="bottom-container">
+                      <ListGroup>
+                        {dataSources.map((source, index) => (
+                          <ListGroupItem className="modal-bg">
+                            <Button className="inputFont w-100" key={index}
+                                onClick={() =>  navigator.clipboard.writeText(source)}>
+                              {source}
+                            </Button>
+                          </ListGroupItem>
+                        ))}
+                      </ListGroup>
+                    </div>
+                  </div>
+                </div>
               }
             </div>
           </div>
