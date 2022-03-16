@@ -19,7 +19,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import React, { useRef, useState, useLayoutEffect } from 'react';
+import React, { useRef, useState } from 'react';
 import DropdownTreeSelect from "react-dropdown-tree-select";
 import { useSession } from "@inrupt/solid-ui-react";
 import { Button } from "@inrupt/prism-react-components";
@@ -127,9 +127,10 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  const [state, setState] = useState('start')
-  const dataSources = []
-  const [effectLogs, setEffectLogs] = useState([])
+  /* const [state, setState] = useState('start')
+  const dataSources = [] */
+  const [display, setDisplay] = React.useState("");
+  const values = [];
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
     getPodUrlAll(session.info.webId).then(response => {
@@ -137,18 +138,14 @@ export default function Home() {
       const podPrivateContainer = `${podRoot}private/`;
       
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
-        dataSources = dataSources.concat(result);
-        setState('add-trip')
-        console.log(dataSources);
+        // dataSources = dataSources.concat(result);
+        values.push(result);
+        setDisplay(values.join(""))
+        /* setState('add-trip')
+        console.log(dataSources); */
       })
     }); 
   }
-  useLayoutEffect(
-    () => {
-      setEffectLogs(prevEffectLogs => [...prevEffectLogs, 'effect fn has been invoked'])
-    },
-    [state]
-  )
   
   return (
     <div>
@@ -174,7 +171,12 @@ export default function Home() {
           </div>
           <div class="container">
             <div>
-              {state === 'start' && 
+            <div class="bottom-container">
+              <p><b>Generate policy:</b></p>
+              <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
+              {display}
+            </div>
+              {/* {state === 'start' && 
                 <div class="bottom-container">
                   <p><b>Generate policy:</b></p>
                   <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
@@ -188,23 +190,20 @@ export default function Home() {
                   </div>
                   <div class="container">
                     <div class="bottom-container">
-                      {/* <ListGroup>
+                      <ListGroup>
                         {dataSources.map((source, index) => (
                           <ListGroupItem className="modal-bg">
                             <Button className="inputFont w-100" key={index}
                                 onClick={() =>  navigator.clipboard.writeText(source)}>
-                              {source}
+                                {source}
                             </Button>
                           </ListGroupItem>
                         ))}
-                      </ListGroup> */}
-                      {effectLogs.map((effect, index) => (
-                        <div key={index}>{'🍔'.repeat(index) + effect}</div>
-                      ))}
+                      </ListGroup>
                     </div>
                   </div>
                 </div>
-              }
+              } */}
             </div>
           </div>
         </div>        
