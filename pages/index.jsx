@@ -162,8 +162,7 @@ export default function Home() {
             </div>
           </div>
           <div class="container">
-            {/* <div class="bottom-container"> */}
-            <div class="">
+            <div class="bottom-container">
               <p><b>Generate policy:</b></p>
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
             </div>
@@ -172,7 +171,7 @@ export default function Home() {
             <div class="">
               <ListGroup>
                 {display.map((source, index) => (
-                  <ListGroupItem className="modal-bg">
+                  <ListGroupItem class="list-item" className="modal-bg">
                     <Button className="inputFont w-100" key={index}
                         onClick={() =>  navigator.clipboard.writeText(source)}>
                         {source}

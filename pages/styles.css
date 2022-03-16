@@ -59,6 +59,10 @@ body,
   padding-bottom:50px;
 }
 
+.list-item{
+  padding-bottom:10px;
+}
+
 .logged-out{
   text-align: center;
   padding-top:100px;
