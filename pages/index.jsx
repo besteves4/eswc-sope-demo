@@ -129,7 +129,8 @@ export default function Home() {
 
   /* const [state, setState] = useState('start')
   const dataSources = [] */
-  const [display, setDisplay] = useState("");
+  // const [display, setDisplay] = useState("");
+  const [display, setDisplay] = useState([]);
   const values = [];
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
@@ -139,9 +140,10 @@ export default function Home() {
       
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         // dataSources = dataSources.concat(result);
-        values.push(result);
+        setDisplay(result)
+        /* values.push(result);
         setDisplay(values.join(""))
-        /* setState('add-trip')
+        setState('add-trip')
         console.log(dataSources); */
       })
     }); 
