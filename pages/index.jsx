@@ -127,7 +127,7 @@ export default function Home() {
     console.log(selectedAccess);
   };
 
-  const state = 'start';
+  const [state, setState] = useState('start')
   const dataSources = []
   const getAuthorizedDataBtn = useRef()
   const getAuthorizedData = () => {
@@ -137,13 +137,13 @@ export default function Home() {
 
       getDataSources(podPrivateContainer, selectedPD, selectedPurpose, selectedAccess).then(result =>{
         dataSources = dataSources.concat(result);
-        state = 'add-trip';
+        setState('add-trip')
         console.log(dataSources);
         console.log(state);
       })
     }); 
   }
-
+  console.log(dataSources);
   return (
     <div>
       {session.info.isLoggedIn &&
