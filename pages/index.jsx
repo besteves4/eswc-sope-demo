@@ -163,6 +163,7 @@ export default function Home() {
           </div>
           <div class="container">
             <div class="bottom-container">
+              <p><b></b></p>
               <Button variant="small" onClick={getAuthorizedData} ref={getAuthorizedDataBtn}>Get Data</Button>
             </div>
           </div>
