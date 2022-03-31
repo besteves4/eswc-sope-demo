@@ -60,7 +60,8 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
     for (var j = 0; j < selectedPersonalData.length; j++) {
       const pdToCompare = `${oac}${selectedPersonalData[j]}`
       // TODO: deal with targetData.length > 1
-      if(pdToCompare === targetData[0]){
+      //if(pdToCompare === targetData[0]){
+      if(targetData.includes(pdToCompare)){
         for (var k = 0; k < personalDataFilesList.length; k++){
           const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
           const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
@@ -105,7 +106,7 @@ export default function Home() {
   const handlePurpose = (currentNode, selectedNodes) => {
     for (var i = 0; i < selectedNodes.length; i++) {
       //var value = selectedNodes[i].value;
-      var label = selectedNodes[i].label;
+      var label = selectedNodes[i].label.replace(" ", "");
       selectedPurpose.push(label);
     }
     console.log(selectedPurpose);
