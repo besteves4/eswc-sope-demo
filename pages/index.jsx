@@ -65,8 +65,14 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
 
     // get type of access allowed by the policy
     const actionData = getUrlAll(thing, ODRL.action);
+    const accessMatches = [];
+    for (var a = 0; a < selectedAccess.length; a++){
+      const accessToCompare = `${oac}${selectedAccess[a]}`
+      actionData.includes(accessToCompare) ? accessMatches.push(true) : accessMatches.push(false);
+    }
+    let accessResult = accessMatches.every((i) => { return i === true })
 
-    if(pdResult){
+    if(pdResult & accessResult){
       for (var k = 0; k < personalDataFilesList.length; k++){
         const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
         const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
@@ -76,23 +82,6 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
         }
       }
     }
-
-/*     for (var j = 0; j < selectedPersonalData.length; j++) {
-      const pdToCompare = `${oac}${selectedPersonalData[j]}`
-      for (var jj = 0; jj < selectedAccess.length; jj++) {
-        const accessToCompare = `${oac}${selectedAccess[jj]}`
-        if(targetData.includes(pdToCompare) & actionData.includes(accessToCompare)){
-          for (var k = 0; k < personalDataFilesList.length; k++){
-            const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
-            const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
-            const targetDataURL = getUrlAll(personalDataFileThing, RDF.type);
-            if(targetDataURL.indexOf(`${dpvpd}${selectedPersonalData[j]}`) > -1){
-              !datasources.includes(personalDataFilesList[k]) ? datasources.push(personalDataFilesList[k]) : null;
-            }
-          }
-        }
-      }
-    } */
   }
   return(datasources);
 }
