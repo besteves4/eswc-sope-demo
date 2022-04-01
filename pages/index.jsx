@@ -56,11 +56,28 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
     
     // get type of data targeted by the policy
     const targetData = getUrlAll(thing, ODRL.target);
+    const pdMatches = [];
+    for (var pd = 0; pd < selectedPersonalData.length; pd++){
+      const pdToCompare = `${oac}${selectedPersonalData[pd]}`
+      targetData.includes(pdToCompare) ? pdMatches.push(true) : pdMatches.push(false);
+    }
+    let pdResult = pdMatches.every((i) => { return i === true })
 
     // get type of access allowed by the policy
     const actionData = getUrlAll(thing, ODRL.action);
-    
-    for (var j = 0; j < selectedPersonalData.length; j++) {
+
+    if(pdResult){
+      for (var k = 0; k < personalDataFilesList.length; k++){
+        const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
+        const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
+        const targetDataURL = getUrlAll(personalDataFileThing, RDF.type);
+        if(targetDataURL.indexOf(`${dpvpd}${selectedPersonalData[j]}`) > -1){
+          !datasources.includes(personalDataFilesList[k]) ? datasources.push(personalDataFilesList[k]) : null;
+        }
+      }
+    }
+
+/*     for (var j = 0; j < selectedPersonalData.length; j++) {
       const pdToCompare = `${oac}${selectedPersonalData[j]}`
       for (var jj = 0; jj < selectedAccess.length; jj++) {
         const accessToCompare = `${oac}${selectedAccess[jj]}`
@@ -75,7 +92,7 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
           }
         }
       }
-    }
+    } */
   }
   return(datasources);
 }
