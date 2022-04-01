@@ -33,6 +33,7 @@ import purpose from "./purposes.json";
 
 const dpvpd = "https://www.w3id.org/dpv/pd#" ;
 const oac = "https://w3id.org/oac/" ;
+const dpv = "http://www.w3.org/ns/dpv#";
 
 async function getDataSources(privateContainer, selectedPersonalData, selectedPurpose, selectedAccess) {
   // get list of ODRL policies
@@ -61,6 +62,7 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
       const pdToCompare = `${oac}${selectedPersonalData[pd]}`
       targetData.includes(pdToCompare) ? pdMatches.push(true) : pdMatches.push(false);
     }
+    console.log(pdMatches)
     let pdResult = pdMatches.every((i) => { return i === true })
 
     // get type of access allowed by the policy
@@ -70,9 +72,23 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
       const accessToCompare = `${oac}${selectedAccess[a]}`
       actionData.includes(accessToCompare) ? accessMatches.push(true) : accessMatches.push(false);
     }
+    console.log(accessMatches)
     let accessResult = accessMatches.every((i) => { return i === true })
 
-    if(pdResult & accessResult){
+    // get purposes allowed by the policy
+    const purposeConstraintThing = `${policyList[i]}#purposeConstraint`
+    const purposeThing = getThing( policyPermission, purposeConstraintThing);
+    const purposeData = getUrlAll(purposeThing, ODRL.rightOperand);
+    const purposeMatches = [];
+    for (var pu = 0; pu < selectedPurpose.length; pu++){
+      const purposeToCompare = `${dpv}${selectedPurpose[pu]}`
+      purposeData.includes(purposeToCompare) ? purposeMatches.push(true) : purposeMatches.push(false);
+    }
+    console.log(purposeData)
+    console.log(purposeMatches)
+    let purposeResult = purposeMatches.every((i) => { return i === true })
+
+    if(pdResult & accessResult & purposeResult){
       for (var k = 0; k < personalDataFilesList.length; k++){
         const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
         const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
