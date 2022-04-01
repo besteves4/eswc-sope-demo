@@ -71,7 +71,7 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
         const personalDataFile = await getSolidDataset( personalDataFilesList[k], { fetch: fetch });
         const personalDataFileThing = getThing(personalDataFile, personalDataFilesList[k]);
         const targetDataURL = getUrlAll(personalDataFileThing, RDF.type);
-        if(targetDataURL.indexOf(`${dpvpd}${selectedPersonalData[j]}`) > -1){
+        if(selectedPersonalData.includes(targetDataURL[0].split("#").pop())){
           !datasources.includes(personalDataFilesList[k]) ? datasources.push(personalDataFilesList[k]) : null;
         }
       }
