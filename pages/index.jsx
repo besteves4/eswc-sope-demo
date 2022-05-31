@@ -62,7 +62,6 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
       const pdToCompare = `${oac}${selectedPersonalData[pd]}`
       targetData.includes(pdToCompare) ? pdMatches.push(true) : pdMatches.push(false);
     }
-    console.log(pdMatches)
     let pdResult = pdMatches.every((i) => { return i === true })
 
     // get type of access allowed by the policy
@@ -72,6 +71,7 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
       const accessToCompare = `${oac}${selectedAccess[a]}`
       actionData.includes(accessToCompare) ? accessMatches.push(true) : accessMatches.push(false);
     }
+    console.log(actionData)
     console.log(accessMatches)
     let accessResult = accessMatches.every((i) => { return i === true })
 
@@ -84,8 +84,6 @@ async function getDataSources(privateContainer, selectedPersonalData, selectedPu
       const purposeToCompare = `${dpv}${selectedPurpose[pu]}`
       purposeData.includes(purposeToCompare) ? purposeMatches.push(true) : purposeMatches.push(false);
     }
-    console.log(purposeData)
-    console.log(purposeMatches)
     let purposeResult = purposeMatches.every((i) => { return i === true })
 
     if(pdResult & accessResult & purposeResult){
