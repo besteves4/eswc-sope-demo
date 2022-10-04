@@ -37,7 +37,7 @@
   "devDependencies": {
     "@inrupt/eslint-config-base": "^0.2.0-alpha.1",
     "@inrupt/eslint-config-react": "^0.2.0-alpha.1",
-    "@typescript-eslint/eslint-plugin": "^4.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
     "@typescript-eslint/parser": "^3.10.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.20.0",
